@@ -6,7 +6,7 @@ const slots = Array.from({ length: 9 });
 
 export default function BinderPage({ pageNum }: BinderPageProps) {
   return (
-    <div className="h-full w-full rounded-2xl bg-zinc-900 p-8 shadow-2xl">
+    <div className="h-full w-full rounded-2xl bg-grey-darker p-8 shadow-2xl">
       <div className="grid h-full grid-cols-3 grid-rows-3 gap-6">
         {slots.map((_, index) => (
           <div

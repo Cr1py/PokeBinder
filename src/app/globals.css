@@ -6,6 +6,10 @@
   --pink: #da627d;
   --pink-dark: #c14f6b;
   --pink-darker: #a8405c;
+  --grey-light: #6c757d;
+  --grey: #495057;
+  --grey-dark: #343a40;
+  --grey-darker: #212529;
 }
 
 @theme inline {
@@ -14,6 +18,10 @@
   --color-pink: var(--pink);
   --color-pink-dark: var(--pink-dark);
   --color-pink-darker: var(--pink-darker);
+  --color-grey-light: var(--grey-light);
+  --color-grey: var(--grey);
+  --color-grey-dark: var(--grey-dark);
+  --color-grey-darker: var(--grey-darker);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

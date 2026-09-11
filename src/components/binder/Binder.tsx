@@ -2,7 +2,7 @@
 import { useState } from "react";
 import BinderCover from "./BinderCover";
 import BinderPage from "./BinderPage";
-// import PageController from "./PageController";
+import PageController from "./PageController";
 
 const TOTAL_PAGES = 4;
 
@@ -31,7 +31,14 @@ export default function Binder() {
           <BinderPage pageNum={currPage} />
         )}
       </div>
-
+      {isOpen && (
+        <PageController
+          currentPage={currPage}
+          totalPages={TOTAL_PAGES}
+          onPrevious={prevPage}
+          onNext={nextPage}
+        />
+      )}
     </div>
   );
 }
