@@ -1,28 +1,68 @@
+"use client";
+import PageContent from "./PageContent";
+import FlippingLeaf from "./FlippingLeaf";
+import PageCorner from "./PageCorner";
+import { getLeftPageNum, getRightPageNum } from "./PageController";
+
 type BinderPageProps = {
-  pageNum: number;
+  spread: number;
+  totalSpreads: number;
+  flipDirection: 1 | -1 | null;
+  onFlipComplete: () => void;
+  onRequestNext: () => void;
+  onRequestPrev: () => void;
 };
 
-const slots = Array.from({ length: 9 });
+export default function BinderPage({
+  spread,
+  totalSpreads,
+  flipDirection,
+  onFlipComplete,
+  onRequestNext,
+  onRequestPrev,
+}: BinderPageProps) {
+  const leftPageNum = getLeftPageNum(spread, totalSpreads);
+  const rightPageNum = getRightPageNum(spread, totalSpreads);
+  const nextLeftPageNum = getLeftPageNum(spread + 1, totalSpreads);
+  const nextRightPageNum = getRightPageNum(spread + 1, totalSpreads);
+  const prevLeftPageNum = getLeftPageNum(spread - 1, totalSpreads);
+  const prevRightPageNum = getRightPageNum(spread - 1, totalSpreads);
 
-export default function BinderPage({ pageNum }: BinderPageProps) {
+  const staticLeftPageNum = flipDirection === -1 ? prevLeftPageNum : leftPageNum;
+  const staticRightPageNum = flipDirection === 1 ? nextRightPageNum : rightPageNum;
+
+  const canGoNext = spread < totalSpreads && flipDirection === null;
+  const canGoPrev = spread > 1 && flipDirection === null;
+
   return (
-    <div className="h-full w-full rounded-2xl bg-grey-darker p-8 shadow-2xl">
-      <div className="grid h-full grid-cols-3 grid-rows-3 gap-6">
-        {slots.map((_, index) => (
-          <div
-            key={index}
-            className="flex items-center justify-center rounded-lg border border-white/20 bg-white/5 p-3"
-          >
-            <div className="flex h-full w-full items-center justify-center rounded-md border-2 border-dashed border-white/20 text-sm text-white/40">
-              Card {index + 1}
-            </div>
-          </div>
-        ))}
+    <div
+      className="relative h-full w-full rounded-2xl bg-grey-darker p-8 shadow-2xl"
+      style={{ perspective: 2400 }}
+    >
+      <div className="absolute left-0 top-0 h-full w-1/2 py-8 pl-8 pr-4">
+        <PageContent pageNum={staticLeftPageNum} />
       </div>
 
-      <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-white/50">
-        Page {pageNum}
-      </p>
+      <div className="absolute right-0 top-0 h-full w-1/2 py-8 pl-4 pr-8">
+        <PageContent pageNum={staticRightPageNum} />
+      </div>
+
+      <div className="pointer-events-none absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-black/40" />
+
+      <PageCorner position="top-left" onClick={onRequestPrev} disabled={!canGoPrev} />
+      <PageCorner position="bottom-left" onClick={onRequestPrev} disabled={!canGoPrev} />
+      <PageCorner position="top-right" onClick={onRequestNext} disabled={!canGoNext} />
+      <PageCorner position="bottom-right" onClick={onRequestNext} disabled={!canGoNext} />
+
+      {flipDirection !== null && (
+        <FlippingLeaf
+          key={`${spread}-${flipDirection}`}
+          direction={flipDirection}
+          frontPageNum={flipDirection === 1 ? rightPageNum : leftPageNum}
+          backPageNum={flipDirection === 1 ? nextLeftPageNum : prevRightPageNum}
+          onComplete={onFlipComplete}
+        />
+      )}
     </div>
   );
 }
