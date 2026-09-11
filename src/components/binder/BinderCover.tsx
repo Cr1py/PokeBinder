@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "motion/react";
 
 type BinderCoverProps = {
@@ -12,9 +13,20 @@ export default function BinderCover({ onOpen }: BinderCoverProps) {
       className="absolute inset-0 overflow-hidden rounded-2xl border border-black/10 bg-pink shadow-2xl"
       whileHover={{ scale: 1.01 }}
       whileTap={{ scale: 0.99 }}
+      initial={{ rotateY: 0, opacity: 1 }}
+      exit={{
+        rotateY: -115,
+        opacity: 0,
+        transition: {
+          rotateY: { duration: 0.7, ease: [0.45, 0, 0.55, 1] },
+          opacity: { duration: 0.3, delay: 0.4 },
+        },
+      }}
       style={{
         backgroundImage:
           "repeating-linear-gradient(45deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 1px, transparent 1px, transparent 4px), repeating-linear-gradient(-45deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 1px, transparent 1px, transparent 4px)",
+        transformOrigin: "0% 50%",
+        transformStyle: "preserve-3d",
       }}
     >
       <div className="pointer-events-none absolute inset-3 rounded-xl border-2 border-dashed border-black/10" />
