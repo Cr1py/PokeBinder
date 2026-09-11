@@ -5,19 +5,27 @@ import { Card } from "@/types/card";
 
 type PageContentProps = {
   pageNum: number | null;
-  onCardClick?: (card: Card) => void;
+  selectedCardId: string | null;
+  onSelectCard: (card: Card) => void;
+  onDeselectCard: () => void;
+  onInspectCard: (card: Card) => void;
 };
 
-export default function PageContent({ pageNum, onCardClick }: PageContentProps) {
+export default function PageContent({
+  pageNum,
+  selectedCardId,
+  onSelectCard,
+  onDeselectCard,
+  onInspectCard,
+}: PageContentProps) {
   if (pageNum === null) {
     return <div className="h-full w-full rounded-xl bg-white/5" />;
   }
 
   const pageData = binderPages.find((page) => page.pageNumber === pageNum);
-  const slots = pageData?.slots ?? Array.from({ length: 9 }, (_, i) => ({
-    position: i + 1,
-    cardId: null,
-  }));
+  const slots =
+    pageData?.slots ??
+    Array.from({ length: 9 }, (_, i) => ({ position: i + 1, cardId: null }));
 
   return (
     <div className="relative flex h-full w-full flex-col">
@@ -31,7 +39,10 @@ export default function PageContent({ pageNum, onCardClick }: PageContentProps) 
             <CardSleeve
               key={slot.position}
               card={card}
-              onCardClick={onCardClick}
+              isSelected={card ? card.id === selectedCardId : false}
+              onSelect={onSelectCard}
+              onDeselect={onDeselectCard}
+              onInspect={onInspectCard}
             />
           );
         })}

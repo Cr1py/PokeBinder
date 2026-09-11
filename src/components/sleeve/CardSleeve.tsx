@@ -1,25 +1,46 @@
 "use client";
-import { useState } from "react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { Card } from "@/types/card";
 
 type CardSleeveProps = {
   card?: Card;
-  onCardClick?: (card: Card) => void;
+  isSelected: boolean;
+  onSelect: (card: Card) => void;
+  onDeselect: () => void;
+  onInspect: (card: Card) => void;
 };
 
-export default function CardSleeve({ card, onCardClick }: CardSleeveProps) {
-  const [isSelected, setIsSelected] = useState(false);
-
-  const handleClick = () => {
+export default function CardSleeve({
+  card,
+  isSelected,
+  onSelect,
+  onDeselect,
+  onInspect,
+}: CardSleeveProps) {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!card) return;
-    setIsSelected((prev) => !prev);
-    onCardClick?.(card);
+
+    if (!isSelected) {
+      onSelect(card);
+      return;
+    }
+
+    // logic for deciding pick up/ inspect or sleeve back
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickY = e.clientY - rect.top;
+    const isTopHalf = clickY < rect.height / 2;
+
+    if (isTopHalf) {
+      onInspect(card);
+    } else {
+      onDeselect();
+    }
   };
 
   return (
     <div className="relative aspect-[2.5/3.5] w-full">
+      {/* sleeve background */}
       <div className="absolute inset-0 rounded-lg border border-white/20 bg-white/10 shadow-inner backdrop-blur-sm" />
 
       {!card && (
@@ -49,10 +70,18 @@ export default function CardSleeve({ card, onCardClick }: CardSleeveProps) {
             sizes="200px"
             className="object-cover"
           />
+
+          {/* top= inspect, bottom=put back */}
+          {isSelected && (
+            <>
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 transition-colors hover:bg-white/10" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 transition-colors hover:bg-black/10" />
+            </>
+          )}
         </motion.button>
       )}
 
-      {/* sleeve */}
+      {/* sleeve overlay on top of the card */}
       <div className="pointer-events-none absolute inset-0 z-30 overflow-hidden rounded-lg">
         <div className="absolute inset-x-0 bottom-0 h-[97%] bg-white/10" />
       </div>
