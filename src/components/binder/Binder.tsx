@@ -4,6 +4,8 @@ import { AnimatePresence } from "motion/react";
 import BinderCover from "./BinderCover";
 import BinderPage from "./BinderPage";
 import PageController from "./PageController";
+import CardViewer from "@/components/card/CardViewer";
+import { Card } from "@/types/card";
 
 const TOTAL_SPREADS = 4;
 
@@ -13,14 +15,19 @@ export default function Binder() {
   const [spread, setSpread] = useState(1);
   const [flipDirection, setFlipDirection] = useState<1 | -1 | null>(null);
 
+  const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
+  const [viewingCard, setViewingCard] = useState<Card | null>(null);
+
   const requestNext = () => {
     if (spread < TOTAL_SPREADS && flipDirection === null) {
+      setSelectedCardId(null);
       setFlipDirection(1);
     }
   };
 
   const requestPrev = () => {
     if (spread > 1 && flipDirection === null) {
+      setSelectedCardId(null);
       setFlipDirection(-1);
     }
   };
@@ -32,6 +39,18 @@ export default function Binder() {
 
   const startOpening = () => {
     setIsOpening(true);
+  };
+
+  const handleSelectCard = (card: Card) => {
+    setSelectedCardId(card.id);
+  };
+
+  const handleDeselectCard = () => {
+    setSelectedCardId(null);
+  };
+
+  const handleInspectCard = (card: Card) => {
+    setViewingCard(card);
   };
 
   return (
@@ -58,9 +77,14 @@ export default function Binder() {
             onFlipComplete={handleFlipComplete}
             onRequestNext={requestNext}
             onRequestPrev={requestPrev}
+            selectedCardId={selectedCardId}
+            onSelectCard={handleSelectCard}
+            onDeselectCard={handleDeselectCard}
+            onInspectCard={handleInspectCard}
           />
         )}
       </div>
+
       {isOpen && (
         <PageController
           currentPage={spread}
@@ -68,6 +92,10 @@ export default function Binder() {
           onPrevious={requestPrev}
           onNext={requestNext}
         />
+      )}
+
+      {viewingCard && (
+        <CardViewer card={viewingCard} onClose={() => setViewingCard(null)} />
       )}
     </div>
   );

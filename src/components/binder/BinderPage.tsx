@@ -3,6 +3,7 @@ import PageContent from "./PageContent";
 import FlippingLeaf from "./FlippingLeaf";
 import PageCorner from "./PageCorner";
 import { getLeftPageNum, getRightPageNum } from "./PageController";
+import { Card } from "@/types/card";
 
 type BinderPageProps = {
   spread: number;
@@ -11,6 +12,10 @@ type BinderPageProps = {
   onFlipComplete: () => void;
   onRequestNext: () => void;
   onRequestPrev: () => void;
+  selectedCardId: string | null;
+  onSelectCard: (card: Card) => void;
+  onDeselectCard: () => void;
+  onInspectCard: (card: Card) => void;
 };
 
 export default function BinderPage({
@@ -20,6 +25,10 @@ export default function BinderPage({
   onFlipComplete,
   onRequestNext,
   onRequestPrev,
+  selectedCardId,
+  onSelectCard,
+  onDeselectCard,
+  onInspectCard,
 }: BinderPageProps) {
   const leftPageNum = getLeftPageNum(spread, totalSpreads);
   const rightPageNum = getRightPageNum(spread, totalSpreads);
@@ -40,11 +49,23 @@ export default function BinderPage({
       style={{ perspective: 2400 }}
     >
       <div className="absolute left-0 top-0 h-full w-1/2 py-8 pl-8 pr-4">
-        <PageContent pageNum={staticLeftPageNum} />
+        <PageContent
+          pageNum={staticLeftPageNum}
+          selectedCardId={selectedCardId}
+          onSelectCard={onSelectCard}
+          onDeselectCard={onDeselectCard}
+          onInspectCard={onInspectCard}
+        />
       </div>
 
       <div className="absolute right-0 top-0 h-full w-1/2 py-8 pl-4 pr-8">
-        <PageContent pageNum={staticRightPageNum} />
+        <PageContent
+          pageNum={staticRightPageNum}
+          selectedCardId={selectedCardId}
+          onSelectCard={onSelectCard}
+          onDeselectCard={onDeselectCard}
+          onInspectCard={onInspectCard}
+        />
       </div>
 
       <div className="pointer-events-none absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-black/40" />
