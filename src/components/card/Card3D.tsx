@@ -48,10 +48,10 @@ export default function Card3D({ card }: Card3DProps) {
       onPointerOut={handlePointerUp}
     >
       <boxGeometry args={[cardWidth, cardHeight, cardThickness]} />
-      <meshStandardMaterial attach="material-0" color="#1D2C5E" />
-      <meshStandardMaterial attach="material-1" color="#1D2C5E" />
-      <meshStandardMaterial attach="material-2" color="#1D2C5E" />
-      <meshStandardMaterial attach="material-3" color="#1D2C5E" />
+      <meshStandardMaterial attach="material-0" visible={false} />
+      <meshStandardMaterial attach="material-1" visible={false} />
+      <meshStandardMaterial attach="material-2" visible={false} />
+      <meshStandardMaterial attach="material-3" visible={false} />
       <meshStandardMaterial
         attach="material-4"
         map={frontTexture}
