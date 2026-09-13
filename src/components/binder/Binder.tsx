@@ -1,13 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence } from "motion/react";
 import BinderCover from "./BinderCover";
 import BinderPage from "./BinderPage";
 import PageController from "./PageController";
 import CardViewer from "@/components/card/CardViewer";
-import { Card } from "@/types/card";
-
-const TOTAL_SPREADS = 4;
+import { fetchCards } from "@/lib/cardService";
+import { fetchBinderPages } from "@/lib/binderService";
+import { Card, BinderPageData } from "@/types/card";
 
 export default function Binder() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,8 +18,36 @@ export default function Binder() {
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
   const [viewingCard, setViewingCard] = useState<Card | null>(null);
 
+  const [cards, setCards] = useState<Card[]>([]);
+  const [binderPages, setBinderPages] = useState<BinderPageData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+
+  const loadData = useCallback(async () => {
+    setIsLoading(true);
+    setLoadError(null);
+    try {
+      const [cardsData, pagesData] = await Promise.all([
+        fetchCards(),
+        fetchBinderPages(),
+      ]);
+      setCards(cardsData);
+      setBinderPages(pagesData);
+    } catch (err) {
+      setLoadError(err instanceof Error ? err.message : "Failed to load binder data.");
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  const totalSpreads = Math.max(1, Math.ceil(binderPages.length / 2) + 1);
+
   const requestNext = () => {
-    if (spread < TOTAL_SPREADS && flipDirection === null) {
+    if (spread < totalSpreads && flipDirection === null) {
       setSelectedCardId(null);
       setFlipDirection(1);
     }
@@ -69,10 +97,22 @@ export default function Binder() {
           {!isOpening && <BinderCover key="cover" onOpen={startOpening} />}
         </AnimatePresence>
 
-        {isOpen && (
+        {isOpen && isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-grey-darker text-white/60">
+            Loading binder...
+          </div>
+        )}
+
+        {isOpen && !isLoading && loadError && (
+          <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-grey-darker px-8 text-center text-red-400">
+            {loadError}
+          </div>
+        )}
+
+        {isOpen && !isLoading && !loadError && (
           <BinderPage
             spread={spread}
-            totalSpreads={TOTAL_SPREADS}
+            totalSpreads={totalSpreads}
             flipDirection={flipDirection}
             onFlipComplete={handleFlipComplete}
             onRequestNext={requestNext}
@@ -81,6 +121,8 @@ export default function Binder() {
             onSelectCard={handleSelectCard}
             onDeselectCard={handleDeselectCard}
             onInspectCard={handleInspectCard}
+            cards={cards}
+            binderPages={binderPages}
           />
         )}
       </div>
@@ -88,7 +130,7 @@ export default function Binder() {
       {isOpen && (
         <PageController
           currentPage={spread}
-          totalPages={TOTAL_SPREADS}
+          totalPages={totalSpreads}
           onPrevious={requestPrev}
           onNext={requestNext}
         />

@@ -23,12 +23,12 @@ export const binderPages: BinderPageData[] = [
   {
     pageNumber: 1,
     slots: [
-      { position: 1, cardId: "ex-001" },
+      { position: 1, cardId: null },
       { position: 2, cardId: null },
       { position: 3, cardId: null },
-      { position: 4, cardId: "ex-002" },
-      { position: 5, cardId: null  },
-      { position: 6, cardId: null  },
+      { position: 4, cardId: null },
+      { position: 5, cardId: null },
+      { position: 6, cardId: null },
       { position: 7, cardId: null },
       { position: 8, cardId: null  },
       { position: 9, cardId: null },

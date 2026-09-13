@@ -1,12 +1,20 @@
+"use client";
+import { useState, useCallback } from "react";
 import Binder from "@/components/binder/Binder";
 import AdminButton from "@/components/admin/AdminButton";
-import { motion } from "motion/react";
+
 
 export default function Home() {
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const handleCardAdded = useCallback(() => {
+    setRefreshKey((k) => k + 1); 
+  }, []);
+  
   return (
     <main>
-      <Binder />
-      <AdminButton />
+      <Binder key={refreshKey} />
+      <AdminButton onCardAdded={handleCardAdded} />
     </main>
   );
 }
