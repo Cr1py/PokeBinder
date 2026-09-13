@@ -20,7 +20,7 @@ export default function CardViewer({ card, onClose }: CardViewerProps) {
         onClick={onClose}
       >
         <motion.div
-          className="relative aspect-[2.5/3.5] w-[min(80vw,400px)]"
+          className="relative aspect-[2.5/3.5] w-[min(80vw,550px)]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
