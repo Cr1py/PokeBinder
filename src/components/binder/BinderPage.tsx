@@ -90,6 +90,12 @@ export default function BinderPage({
           frontPageNum={flipDirection === 1 ? rightPageNum : leftPageNum}
           backPageNum={flipDirection === 1 ? nextLeftPageNum : prevRightPageNum}
           onComplete={onFlipComplete}
+          cards={cards}
+          binderPages={binderPages}
+          selectedCardId={selectedCardId}
+          onSelectCard={onSelectCard}
+          onDeselectCard={onDeselectCard}
+          onInspectCard={onInspectCard}
         />
       )}
     </div>
