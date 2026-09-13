@@ -2,12 +2,19 @@
 import { useEffect } from "react";
 import { motion, useMotionValue, useTransform, animate } from "motion/react";
 import PageContent from "./PageContent";
+import { Card, BinderPageData } from "@/types/card";
 
 type FlippingLeafProps = {
   direction: 1 | -1; // 1 = turning forward, -1 = turning back
   frontPageNum: number | null;
   backPageNum: number | null;
   onComplete: () => void;
+  cards: Card[];
+  binderPages: BinderPageData[];
+  selectedCardId: string | null;
+  onSelectCard: (card: Card) => void;
+  onDeselectCard: () => void;
+  onInspectCard: (card: Card) => void;
 };
 
 export default function FlippingLeaf({
@@ -15,6 +22,12 @@ export default function FlippingLeaf({
   frontPageNum,
   backPageNum,
   onComplete,
+  cards,
+  binderPages,
+  selectedCardId,
+  onSelectCard,
+  onDeselectCard,
+  onInspectCard,
 }: FlippingLeafProps) {
   const rotateY = useMotionValue(0);
   const isForward = direction === 1;
@@ -42,6 +55,15 @@ export default function FlippingLeaf({
   const frontPad = isForward ? "py-8 pl-4 pr-8" : "py-8 pl-8 pr-4";
   const backPad = isForward ? "py-8 pl-8 pr-4" : "py-8 pl-4 pr-8";
 
+  const pageContentProps = {
+    cards,
+    binderPages,
+    selectedCardId,
+    onSelectCard,
+    onDeselectCard,
+    onInspectCard,
+  };
+
   return (
     <motion.div
       className="absolute top-0 h-full w-1/2"
@@ -68,7 +90,7 @@ export default function FlippingLeaf({
         className={`absolute inset-0 rounded-2xl bg-grey-darker shadow-xl ${frontPad}`}
         style={{ backfaceVisibility: "hidden" }}
       >
-        <PageContent pageNum={frontPageNum} />
+        <PageContent pageNum={frontPageNum} {...pageContentProps} />
         <motion.div
           className="pointer-events-none absolute inset-0 rounded-2xl bg-black"
           style={{ opacity: frontShadow }}
@@ -83,7 +105,7 @@ export default function FlippingLeaf({
           transform: isForward ? "rotateY(180deg)" : "rotateY(-180deg)",
         }}
       >
-        <PageContent pageNum={backPageNum} />
+        <PageContent pageNum={backPageNum} {...pageContentProps} />
         <motion.div
           className="pointer-events-none absolute inset-0 rounded-2xl bg-black"
           style={{ opacity: backShadow }}
