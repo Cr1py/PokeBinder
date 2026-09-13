@@ -1,7 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from "motion/react";
 import { Canvas} from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
 import { Card } from "@/types/card";
 import Card3D from "./Card3D";
 
@@ -33,7 +32,6 @@ export default function CardViewer({ card, onClose }: CardViewerProps) {
               <ambientLight intensity={0.6} />
               <directionalLight position={[5, 5, 5]} intensity={1} />
               <Card3D card={card}/>
-              <OrbitControls enablePan={false} />
             </Canvas>
           </div>
         </motion.div>
