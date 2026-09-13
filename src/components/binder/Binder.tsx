@@ -94,7 +94,18 @@ export default function Binder() {
         }}
       >
         <AnimatePresence onExitComplete={() => setIsOpen(true)}>
-          {!isOpening && <BinderCover key="cover" onOpen={startOpening} />}
+          {!isOpening && (
+            <BinderCover
+              key="cover"
+              onOpen={startOpening}
+              cards={cards}
+              binderPages={binderPages}
+              selectedCardId={selectedCardId}
+              onSelectCard={handleSelectCard}
+              onDeselectCard={handleDeselectCard}
+              onInspectCard={handleInspectCard}
+            />
+          )}
         </AnimatePresence>
 
         {isOpen && isLoading && (
