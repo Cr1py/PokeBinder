@@ -1,10 +1,11 @@
 "use client";
 import CardSleeve from "@/components/sleeve/CardSleeve";
-import { cards, binderPages } from "@/data/cards";
-import { Card } from "@/types/card";
+import { Card, BinderPageData } from "@/types/card";
 
 type PageContentProps = {
   pageNum: number | null;
+  cards: Card[];
+  binderPages: BinderPageData[];
   selectedCardId: string | null;
   onSelectCard: (card: Card) => void;
   onDeselectCard: () => void;
@@ -13,6 +14,8 @@ type PageContentProps = {
 
 export default function PageContent({
   pageNum,
+  cards,
+  binderPages,
   selectedCardId,
   onSelectCard,
   onDeselectCard,
@@ -22,7 +25,10 @@ export default function PageContent({
     return <div className="h-full w-full rounded-xl bg-white/5" />;
   }
 
-  const pageData = binderPages.find((page) => page.pageNumber === pageNum);
+  const safeBinderPages = binderPages ?? [];
+  const safeCards = cards ?? [];
+
+  const pageData = safeBinderPages.find((page) => page.pageNumber === pageNum);
   const slots =
     pageData?.slots ??
     Array.from({ length: 9 }, (_, i) => ({ position: i + 1, cardId: null }));
@@ -32,7 +38,7 @@ export default function PageContent({
       <div className="grid h-full grid-cols-3 grid-rows-3 gap-4">
         {slots.map((slot) => {
           const card = slot.cardId
-            ? cards.find((c) => c.id === slot.cardId)
+            ? safeCards.find((c) => c.id === slot.cardId)
             : undefined;
 
           return (
