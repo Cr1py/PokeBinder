@@ -1,3 +1,5 @@
+// outdated file
+// this was used for testing teh data struct originally
 import { Card, BinderPageData } from "@/types/card";
 
 export const cards: Card[] = [

@@ -1,25 +1,48 @@
 "use client";
 import { motion } from "motion/react";
+import PageContent from "./PageContent";
+import { Card, BinderPageData } from "@/types/card";
 
 type BinderCoverProps = {
   onOpen: () => void;
+  cards: Card[];
+  binderPages: BinderPageData[];
+  selectedCardId: string | null;
+  onSelectCard: (card: Card) => void;
+  onDeselectCard: () => void;
+  onInspectCard: (card: Card) => void;
 };
 
-export default function BinderCover({ onOpen }: BinderCoverProps) {
+export default function BinderCover({
+  onOpen,
+  cards,
+  binderPages,
+  selectedCardId,
+  onSelectCard,
+  onDeselectCard,
+  onInspectCard,
+}: BinderCoverProps) {
+  console.log("BinderCover received:", { cards, binderPages });
   return (
     <div className="absolute inset-0">
       {/* binder inside so it don't look weird */}
-      <div className="absolute inset-0 rounded-2xl bg-grey-darker shadow-2xl">
-        <div className="flex h-full items-center justify-center p-8">
-          <div className="h-full w-full rounded-xl bg-white/5" />
-        </div>
+      <div className="absolute inset-0 z-0 rounded-2xl bg-grey-darker p-8 shadow-2xl">
+        <PageContent
+          pageNum={1}
+          cards={cards}
+          binderPages={binderPages}
+          selectedCardId={selectedCardId}
+          onSelectCard={onSelectCard}
+          onDeselectCard={onDeselectCard}
+          onInspectCard={onInspectCard}
+        />
       </div>
 
       {/* cover page */}
       <motion.button
         type="button"
         onClick={onOpen}
-        className="absolute inset-0 overflow-hidden rounded-2xl border border-black/10 bg-pink shadow-2xl"
+        className="absolute inset-0 z-40 overflow-hidden rounded-2xl border border-black/10 bg-pink shadow-2xl"
         whileHover={{ scale: 1.01 }}
         whileTap={{ scale: 0.99 }}
         initial={{ rotateY: 0, opacity: 1 }}
