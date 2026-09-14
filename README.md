@@ -22,12 +22,13 @@ Refreshing the page re-fetches the live binder state from the database, so cards
 | `motion` (`motion/react`) | Cover-opening hinge animation, page-flip transitions, card sleeve pop-up/pop-in motion |
 | `@react-three/fiber` | React renderer for Three.js, used for the 3D card viewer |
 | `@react-three/drei` | Texture loading (`useTexture`) and 3D helper utilities |
-| `three` | Underlying 3D engine — custom rounded-rect geometry, extruded card mesh, material-per-face rendering |
+| `three` | Underlying 3D engine: custom rounded-rect geometry, extruded card mesh, material-per-face rendering |
 | `@supabase/supabase-js` | Postgres database, authentication, and file storage |
  
 ### Future To Do's
  
-Add a feature to me to reorder cards within in website, so i don't have to make changes within the SQL data to reorder the display.
+- Add a feature to me to reorder cards within in website, so i don't have to make changes within the SQL data to reorder the display.
+- Add call delete so i can remove card data in app
  
 ## Project structure
  
