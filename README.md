@@ -58,8 +58,8 @@ src/
 │   │   └── Card3D.tsx                 # Textured, draggable/rotatable 3D card mesh
 │   └── admin/
 │       ├── AddCard.tsx                # Upload front/back images, insert card, auto-assign slot
-│       ├── AdminButton.tsx            # Floating lock icon; toggles login modal or signs out
-│       ├── AuthContext.tsx            # Floating lock icon; toggles login modal or signs out
+│       ├── AdminButton.tsx            # Pokeball icon: toggles login or signs out
+│       ├── AuthContext.tsx            # Handles user authentication
 │       └── Login.tsx                  # Email/password form, calls AuthContext.signIn
 ```
  
