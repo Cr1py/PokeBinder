@@ -78,9 +78,9 @@ export default function BinderPage({
 
       <div className="pointer-events-none absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-black/40" />
 
-      <PageCorner position="top-left" onClick={onRequestPrev} disabled={!canGoPrev} />
+      {/* <PageCorner position="top-left" onClick={onRequestPrev} disabled={!canGoPrev} /> */}
       <PageCorner position="bottom-left" onClick={onRequestPrev} disabled={!canGoPrev} />
-      <PageCorner position="top-right" onClick={onRequestNext} disabled={!canGoNext} />
+      {/* <PageCorner position="top-right" onClick={onRequestNext} disabled={!canGoNext} />  */}
       <PageCorner position="bottom-right" onClick={onRequestNext} disabled={!canGoNext} />
 
       {flipDirection !== null && (

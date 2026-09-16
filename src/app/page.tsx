@@ -12,9 +12,13 @@ export default function Home() {
   }, []);
   
   return (
-    <main>
-      <Binder key={refreshKey} />
-      <AdminButton onCardAdded={handleCardAdded} />
-    </main>
+    <div>
+      <title>Cr1py's Poke Binder</title>
+      <main>
+        <Binder key={refreshKey} />
+        <AdminButton onCardAdded={handleCardAdded} />
+      </main>
+    </div>
+
   );
 }
