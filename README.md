@@ -35,8 +35,7 @@ Refreshing the page re-fetches the live binder state from the database, so cards
  
 ### Future To Do's
  
-- Add a feature to me to reorder cards within in website, so i don't have to make changes within the SQL data to reorder the display.
-- Add call delete so i can remove card data in app
+- Add a feature to reorder cards within in website, so i don't have to make changes within the SQL data to reorder the display.
  
 ## Project structure
  
