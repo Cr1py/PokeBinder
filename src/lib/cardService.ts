@@ -70,5 +70,7 @@ export async function uploadCardImage(file: File, cardId: string, side: "front" 
   if (error) throw error;
 
   const { data } = supabase.storage.from("card-images").getPublicUrl(filePath);
-  return data.publicUrl;
+
+  // forces both the browser and next/image to fetch fresh bytes instead of a cached copy.
+  return `${data.publicUrl}?v=${Date.now()}`;
 }
