@@ -19,6 +19,21 @@ export async function addCard(card: Card): Promise<void> {
   if (error) throw error;
 }
 
+export async function updateCard(card: Card): Promise<void> {
+  const { error } = await supabase
+    .from("cards")
+    .update({
+      name: card.name,
+      front_image: card.frontImage,
+      back_image: card.backImage,
+      description: card.description,
+      date: card.date,
+    })
+    .eq("id", card.id);
+
+  if (error) throw error;
+}
+
 function extractStoragePath(publicUrl: string): string | null {
   const marker = "/card-images/";
   const index = publicUrl.indexOf(marker);

@@ -2,20 +2,27 @@
 import { useState } from "react";
 import { useAuth } from "./AuthContext";
 import Login from "./Login";
-import { MdCatchingPokemon, MdOutlineAdd, MdOutlineDelete } from "react-icons/md";
+import { MdCatchingPokemon, MdOutlineAdd, MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
 import AddCard from "./AddCard";
 import DeleteCard from "./DeleteCard";
+import EditCard from "./EditCard";
 
 type AdminButtonProps = {
   onCardAdded: () => void;
   onCardDeleted: () => void;
+  onCardUpdated: () => void;
 };
 
-export default function AdminButton({ onCardAdded, onCardDeleted }: AdminButtonProps) {
+export default function AdminButton({
+  onCardAdded,
+  onCardDeleted,
+  onCardUpdated,
+}: AdminButtonProps) {
   const { isAdmin, signOut } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
   const [showAddCard, setShowAddCard] = useState(false);
   const [showDeleteCard, setShowDeleteCard] = useState(false);
+  const [showEditCard, setShowEditCard] = useState(false);
 
   return (
     <>
@@ -30,6 +37,16 @@ export default function AdminButton({ onCardAdded, onCardDeleted }: AdminButtonP
               title="Add card"
             >
               <MdOutlineAdd className="h-5 w-5" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setShowEditCard(true)}
+              className="rounded-full bg-grey-dark p-3 text-white/60 shadow-lg transition hover:bg-grey hover:text-white"
+              aria-label="Edit card"
+              title="Edit card"
+            >
+              <MdOutlineEdit className="h-5 w-5" />
             </button>
 
             <button
@@ -58,6 +75,9 @@ export default function AdminButton({ onCardAdded, onCardDeleted }: AdminButtonP
       {showLogin && <Login onClose={() => setShowLogin(false)} />}
       {showAddCard && (
         <AddCard onClose={() => setShowAddCard(false)} onCardAdded={onCardAdded} />
+      )}
+      {showEditCard && (
+        <EditCard onClose={() => setShowEditCard(false)} onCardUpdated={onCardUpdated} />
       )}
       {showDeleteCard && (
         <DeleteCard onClose={() => setShowDeleteCard(false)} onCardDeleted={onCardDeleted} />
