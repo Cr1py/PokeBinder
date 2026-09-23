@@ -13,10 +13,8 @@ Refreshing the page re-fetches the live binder state from the database, so cards
 
 ## Demo Images
 
-<img width="3046" height="1640" alt="image" src="https://github.com/user-attachments/assets/492f4bf7-32aa-4294-b595-ef534d4fad07" />
-<img width="3050" height="1654" alt="image" src="https://github.com/user-attachments/assets/b60f3b49-ed19-492c-9361-488946b09f04" />
-
-
+![Opened Binder](public/examples/demoimg1.png)
+![Zoom in on card](public/examples/demoimg2.png)
  
 ## Tech stack & key dependencies
  
