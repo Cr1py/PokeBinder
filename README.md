@@ -10,6 +10,13 @@ My personal art portfolio for my painted Pokemon cards. Inspired by VaultX binde
 4. Inspecting a card opens a 3D viewing of the card that the user can interact with by dragging it to rotate.
 5. A small Pokeball icon in the bottom corner lets the admin (me) log in and add new cards, which are automatically slotted into the next open spot in the binder.
 Refreshing the page re-fetches the live binder state from the database, so cards persist across sessions and devices.
+
+## Demo Images
+
+<img width="3046" height="1640" alt="image" src="https://github.com/user-attachments/assets/492f4bf7-32aa-4294-b595-ef534d4fad07" />
+<img width="3050" height="1654" alt="image" src="https://github.com/user-attachments/assets/b60f3b49-ed19-492c-9361-488946b09f04" />
+
+
  
 ## Tech stack & key dependencies
  
