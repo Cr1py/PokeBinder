@@ -15,8 +15,6 @@ Refreshing the page re-fetches the live binder state from the database, so cards
 
 ![Opened Binder](public/examples/demoimg1.png)
 ![Zoom in on card](public/examples/demoimg2.png)
-
-
  
 ## Tech stack & key dependencies
  
