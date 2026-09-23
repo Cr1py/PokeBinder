@@ -13,8 +13,11 @@ Refreshing the page re-fetches the live binder state from the database, so cards
 
 ## Demo Images
 
-![Opened Binder](public/examples/demoimg1.png)
-![Inspecting card](public/examples/demoimg2.gif)
+<p align="center">
+  <img src="public/examples/demoimg1.png" width="600" />
+  <br />
+  <img src="public/examples/demoimg2.gif" width="600" />
+</p>
  
 ## Tech stack & key dependencies
  
