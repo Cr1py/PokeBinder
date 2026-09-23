@@ -19,8 +19,28 @@ export async function addCard(card: Card): Promise<void> {
   if (error) throw error;
 }
 
-export async function deleteCard(cardId: string): Promise<void> {
-  const { error } = await supabase.from("cards").delete().eq("id", cardId);
+function extractStoragePath(publicUrl: string): string | null {
+  const marker = "/card-images/";
+  const index = publicUrl.indexOf(marker);
+  if (index === -1) return null;
+  return publicUrl.slice(index + marker.length);
+}
+
+export async function deleteCardImages(card: Card): Promise<void> {
+  const paths = [card.frontImage, card.backImage]
+    .map(extractStoragePath)
+    .filter((path): path is string => path !== null);
+
+  if (paths.length === 0) return;
+
+  const { error } = await supabase.storage.from("card-images").remove(paths);
+  if (error) throw error;
+}
+
+export async function deleteCard(card: Card): Promise<void> {
+  await deleteCardImages(card);
+
+  const { error } = await supabase.from("cards").delete().eq("id", card.id);
   if (error) throw error;
 }
 

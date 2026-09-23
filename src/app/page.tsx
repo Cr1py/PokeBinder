@@ -7,7 +7,7 @@ import AdminButton from "@/components/admin/AdminButton";
 export default function Home() {
   const [refreshKey, setRefreshKey] = useState(0);
 
-  const handleCardAdded = useCallback(() => {
+  const handleDataChanged = useCallback(() => {
     setRefreshKey((k) => k + 1); 
   }, []);
   
@@ -16,7 +16,7 @@ export default function Home() {
       <title>Cr1py's Poke Binder</title>
       <main>
         <Binder key={refreshKey} />
-        <AdminButton onCardAdded={handleCardAdded} />
+        <AdminButton onCardAdded={handleDataChanged} onCardDeleted={handleDataChanged} />
       </main>
     </div>
 
