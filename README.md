@@ -8,8 +8,7 @@ My personal art portfolio for my painted Pokemon cards. Inspired by VaultX binde
 2. Flip between pages by clicking a page corner.
 3. Each page shows a 3x3 grid of card sleeves. Click a sleeve once to "pull" a card partway out, and click the top half of it again to inspect it in 3D, or the bottom half to slide it back in.
 4. Inspecting a card opens a 3D viewing of the card that the user can interact with by dragging it to rotate.
-5. A small Pokeball icon in the bottom corner lets the admin (me) log in and add new cards, which are automatically slotted into the next open spot in the binder.
-Refreshing the page re-fetches the live binder state from the database, so cards persist across sessions and devices.
+5. A small Pokeball icon in the bottom corner lets the admin (me) log in and add new cards, which are automatically slotted into the next open spot in the binder. Refreshing the page re-fetches the live binder state from the database, so cards persist across sessions and devices.
 
 ## Demo Images
 
@@ -89,6 +88,4 @@ Each of the nine sleeves on a page renders either a card or an empty placeholder
  
 **6. The 3D card: `Card3D.tsx`**
 The card is built as a box mesh with a different material on each face. The four thin edges use a solid color, while the front and back faces use the card's real artwork, with support for transparent PNGs. Dragging the card rotates it, and releasing the mouse lets it settle in place.
- 
-**7. Admin add flow: `AdminButton.tsx` to `AddCard.tsx`**
-Once signed in through `AuthContext`, an add card button appears next to the lock icon. Submitting the form uploads both the front and back images to Supabase Storage, adds a new row to the `cards` table, and then calls `assignCardToNextSlot`. That function finds the next open slot in `binder_slots`, or creates one if every existing slot is full, and links the new card to it. As a result, the card appears in the binder the next time it loads, with no manual database work required.
+
